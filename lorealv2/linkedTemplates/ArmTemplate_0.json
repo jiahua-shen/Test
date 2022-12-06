@@ -466,7 +466,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "hive-2",
+						"name": "hive-3",
 						"type": "DatabricksSparkJar",
 						"dependsOn": [],
 						"policy": {
