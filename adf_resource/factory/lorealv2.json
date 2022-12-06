@@ -1,0 +1,15 @@
+{
+	"name": "lorealv2",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "5c2c826b-4bad-40c1-9d43-875f3d288ace",
+		"tenantId": "ab290f9e-67ee-4ed4-b446-69a933260075",
+		"userAssignedIdentities": {
+			"/subscriptions/51499e36-0b01-49b0-83c9-9323bd0318b9/resourcegroups/sgp/providers/Microsoft.ManagedIdentity/userAssignedIdentities/adbstr": {
+				"clientId": "7dd9a0ef-52d8-4226-bfb7-8c6e15c3b821",
+				"principalId": "a5c68adf-4642-4003-8ba6-0c9582d2f617"
+			}
+		}
+	}
+}
