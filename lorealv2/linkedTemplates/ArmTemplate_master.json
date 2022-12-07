@@ -7,9 +7,17 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "lorealv2"
 		},
+		"allpurposedcluster_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'allpurposedcluster'"
+		},
 		"lorealv4_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'lorealv4'"
+		},
+		"allpurposedcluster_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1115-100811-3wsmdq3m"
 		},
 		"containerUri": {
 			"type": "string",
@@ -38,8 +46,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"allpurposedcluster_accessToken": {
+						"value": "[parameters('allpurposedcluster_accessToken')]"
+					},
 					"lorealv4_accessToken": {
 						"value": "[parameters('lorealv4_accessToken')]"
+					},
+					"allpurposedcluster_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('allpurposedcluster_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},

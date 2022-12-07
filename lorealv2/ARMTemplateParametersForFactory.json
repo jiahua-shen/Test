@@ -5,8 +5,14 @@
 		"factoryName": {
 			"value": "lorealv2"
 		},
+		"allpurposedcluster_accessToken": {
+			"value": ""
+		},
 		"lorealv4_accessToken": {
 			"value": ""
+		},
+		"allpurposedcluster_properties_typeProperties_existingClusterId": {
+			"value": "1115-100811-3wsmdq3m"
 		}
 	}
 }
