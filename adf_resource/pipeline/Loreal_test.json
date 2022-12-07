@@ -18,8 +18,9 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStore/test/globalConfig.yaml",
-						"/dbfs/FileStore/test/a.yaml",
-						"@formatDateTime(convertTimeZone(getPastTime(1, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')"
+						"/dbfs/FileStore/test/hive_test.yaml",
+						"20221119",
+						"{\"{dt}\": \"20221119\"}"
 					],
 					"libraries": [
 						{
