@@ -3,12 +3,66 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "allpurposedcluster",
+		"parameters": {
+			"spark.sql.hive.metastore.version": {
+				"type": "string",
+				"defaultValue": "3.1.0"
+			},
+			"javax.jdo.option.ConnectionPassword": {
+				"type": "string",
+				"defaultValue": "Ab123456"
+			},
+			"javax.jdo.option.ConnectionDriverName": {
+				"type": "string",
+				"defaultValue": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+			},
+			"javax.jdo.option.ConnectionURL": {
+				"type": "string",
+				"defaultValue": "jdbc:sqlserver://adbloreal.database.windows.net:1433;database=hms;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+			},
+			"javax.jdo.option.ConnectionUserName": {
+				"type": "string",
+				"defaultValue": "loreal"
+			},
+			"spark.sql.hive.metastore.jars": {
+				"type": "string",
+				"defaultValue": "/databricks/hive_metastore_jars/*"
+			},
+			"spark.driver.extraJavaOptions": {
+				"type": "string",
+				"defaultValue": "\"-Duser.timezone=Asia/Shanghai\""
+			},
+			"spark.executor.extraJavaOptions": {
+				"type": "string",
+				"defaultValue": "\"-Duser.timezone=Asia/Shanghai\""
+			},
+			"spark.sql.sources.partitionOverwriteMode": {
+				"type": "string",
+				"defaultValue": "dynamic"
+			},
+			"spark.sql.shuffle.partitions": {
+				"type": "string",
+				"defaultValue": "200"
+			},
+			"spark.network.timeout": {
+				"type": "string",
+				"defaultValue": "600000"
+			},
+			"spark.serializer": {
+				"type": "string",
+				"defaultValue": "org.apache.spark.serializer.KryoSerializer"
+			},
+			"spark.kryoserializer.buffer.max": {
+				"type": "string",
+				"defaultValue": "1024m"
+			}
+		},
 		"annotations": [],
 		"type": "AzureDatabricks",
 		"typeProperties": {
 			"domain": "https://adb-3936566003135075.15.azuredatabricks.net",
 			"existingClusterId": "1115-100811-3wsmdq3m",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQ2MzJDMkJDLTIwMkYtNDBCMi04MEY5LTcyNDdCMTExMDhBQV9mM2RhYmIyMy0zNzIzLTQ2MjctODYwNS02YTg1OTRhYWIwMTEiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDQ2MzJDMkJDLTIwMkYtNDBCMi04MEY5LTcyNDdCMTExMDhBQV84NDdhZGFhYS1lMWM4LTRmYWItODFlNS1mMmUwNGExYTBkOWIiDQp9"
 		}
 	}
 }
