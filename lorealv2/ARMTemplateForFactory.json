@@ -2595,7 +2595,7 @@
 						"value": "[parameters('lorealv4_accessToken')]"
 					},
 					"instancePoolId": "1031-070915-lupin4-pool-lpv41fhn",
-					"newClusterNumOfWorker": "1:4",
+					"newClusterNumOfWorker": "1",
 					"newClusterSparkConf": {
 						"spark.sql.hive.metastore.version": "3.1.0",
 						"javax.jdo.option.ConnectionPassword": "Ab123456",
@@ -2618,7 +2618,7 @@
 					"newClusterInitScripts": [
 						"dbfs:/infra/bin/init.sh"
 					],
-					"clusterOption": "Autoscaling"
+					"clusterOption": "Fixed"
 				}
 			},
 			"dependsOn": []
