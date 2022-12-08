@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "hive-3",
+				"name": "hive-4",
 				"type": "DatabricksSparkJar",
 				"dependsOn": [],
 				"policy": {
