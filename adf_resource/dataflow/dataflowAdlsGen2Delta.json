@@ -5,9 +5,9 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "ReadOrderTable",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorageTest",
+						"type": "LinkedServiceReference"
 					},
 					"name": "sourceOrder"
 				}
@@ -23,8 +23,14 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: true,",
+				"     inferDriftedColumnTypes: true,",
+				"     limit: 100,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> sourceOrder"
+				"     partitionRootPath: 'demo/table',",
+				"     format: 'parquet',",
+				"     fileSystem: 'test',",
+				"     compressionCodec: 'snappy',",
+				"     wildcardPaths:['demo/table/*/*.parquet']) ~> sourceOrder"
 			]
 		}
 	}
