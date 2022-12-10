@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sourceOrder"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "filterUserName"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          userName as string,",
+				"          goodsName as string,",
+				"          num as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceOrder",
+				"sourceOrder filter(num>1) ~> filterUserName"
+			]
+		}
+	}
+}
