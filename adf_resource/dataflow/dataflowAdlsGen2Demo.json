@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "InputOrder",
 						"type": "DatasetReference"
 					},
 					"name": "sourceOrder"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText2",
+						"referenceName": "OuputText",
 						"type": "DatasetReference"
 					},
 					"name": "sink2ouput"
