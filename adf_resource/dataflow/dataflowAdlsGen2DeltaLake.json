@@ -1,0 +1,58 @@
+{
+	"name": "dataflowAdlsGen2DeltaLake",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "InputOrder",
+						"type": "DatasetReference"
+					},
+					"name": "sourceOrder"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"name": "WriteAsparquet"
+				}
+			],
+			"transformations": [
+				{
+					"name": "addNewColumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          userName as string,",
+				"          goodsName as string,",
+				"          num as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceOrder",
+				"sourceOrder derive(brand = goodsName,",
+				"     partitionBy('key',",
+				"          0,",
+				"          brand",
+				"     )) ~> addNewColumn",
+				"addNewColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          0,",
+				"          brand",
+				"     )) ~> WriteAsparquet"
+			]
+		}
+	}
+}
