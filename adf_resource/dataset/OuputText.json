@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText2",
+	"name": "OuputText",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageTest",
