@@ -1,5 +1,5 @@
 {
-	"name": "InputText",
+	"name": "InputOrder",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageTest",
