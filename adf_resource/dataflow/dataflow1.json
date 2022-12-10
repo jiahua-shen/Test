@@ -12,10 +12,21 @@
 					"name": "sourceOrder"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
-					"name": "filterUserName"
+					"name": "filterNum"
+				},
+				{
+					"name": "aggregateUserAndGood"
 				}
 			],
 			"scriptLines": [
@@ -27,7 +38,17 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> sourceOrder",
-				"sourceOrder filter(num>1) ~> filterUserName"
+				"sourceOrder filter(num>=1) ~> filterNum",
+				"filterNum aggregate(groupBy(userName,",
+				"          goodsName),",
+				"     num = sum(num)) ~> aggregateUserAndGood",
+				"aggregateUserAndGood sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
