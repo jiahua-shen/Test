@@ -1,0 +1,38 @@
+{
+	"name": "ReadOrderTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageTest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": " ",
+				"folderPath": "demo/table/",
+				"fileSystem": "test"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "userName",
+				"type": "UTF8"
+			},
+			{
+				"name": "goodsName",
+				"type": "UTF8"
+			},
+			{
+				"name": "num",
+				"type": "INT32"
+			},
+			{
+				"name": "brand",
+				"type": "UTF8"
+			}
+		]
+	}
+}

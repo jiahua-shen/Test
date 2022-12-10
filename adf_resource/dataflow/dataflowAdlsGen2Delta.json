@@ -1,0 +1,31 @@
+{
+	"name": "dataflowAdlsGen2Delta",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ReadOrderTable",
+						"type": "DatasetReference"
+					},
+					"name": "sourceOrder"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          userName as string,",
+				"          goodsName as string,",
+				"          num as integer,",
+				"          brand as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> sourceOrder"
+			]
+		}
+	}
+}
