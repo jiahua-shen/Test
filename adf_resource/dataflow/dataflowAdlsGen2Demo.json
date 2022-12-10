@@ -33,7 +33,7 @@
 				"source(output(",
 				"          userName as string,",
 				"          goodsName as string,",
-				"          num as string",
+				"          num as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
