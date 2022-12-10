@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflowAdlsGen2DeltaLake",
+						"referenceName": "dataflowAdlsGen2DataLake",
 						"type": "DataFlowReference"
 					},
 					"compute": {

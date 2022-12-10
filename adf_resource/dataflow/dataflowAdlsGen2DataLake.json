@@ -1,5 +1,5 @@
 {
-	"name": "dataflowAdlsGen2DeltaLake",
+	"name": "dataflowAdlsGen2DataLake",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
