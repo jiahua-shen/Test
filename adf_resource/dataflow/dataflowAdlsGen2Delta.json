@@ -12,7 +12,15 @@
 					"name": "sourceOrder"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorageTest",
+						"type": "LinkedServiceReference"
+					},
+					"name": "deltaLakeSink"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
@@ -30,7 +38,28 @@
 				"     format: 'parquet',",
 				"     fileSystem: 'test',",
 				"     compressionCodec: 'snappy',",
-				"     wildcardPaths:['demo/table/*/*.parquet']) ~> sourceOrder"
+				"     wildcardPaths:['demo/table/*/*.parquet']) ~> sourceOrder",
+				"sourceOrder sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     compressionType: 'snappy',",
+				"     compressionLevel: 'Fastest',",
+				"     fileSystem: 'test',",
+				"     folderPath: 'demo/table2',",
+				"     overwrite:true,",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> deltaLakeSink"
 			]
 		}
 	}
