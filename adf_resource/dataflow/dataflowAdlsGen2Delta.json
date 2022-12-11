@@ -59,7 +59,11 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> deltaLakeSink"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          1,",
+				"          brand",
+				"     )) ~> deltaLakeSink"
 			]
 		}
 	}
