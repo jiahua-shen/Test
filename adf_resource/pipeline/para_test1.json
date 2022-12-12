@@ -1,0 +1,95 @@
+{
+	"name": "para_test1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Jar1",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/test/param_test/globalConfig.yaml",
+						"/dbfs/FileStore/test/param_test/pgsql_test.yaml",
+						"20221109",
+						"@pipeline().parameters.date"
+					],
+					"libraries": [
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "lorealv4",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"date": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}

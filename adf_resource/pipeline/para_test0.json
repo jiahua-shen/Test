@@ -1,0 +1,52 @@
+{
+	"name": "para_test0",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute_para_test1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "para_test1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": false,
+					"parameters": {
+						"date": {
+							"value": "@variables('date')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "date",
+					"value": {
+						"value": "@formatDateTime(convertTimeZone(getPastTime(0, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"date": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
