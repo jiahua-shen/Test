@@ -7,7 +7,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "date",
+						"activity": "date1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "date",
+				"name": "date1",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"userProperties": [],
