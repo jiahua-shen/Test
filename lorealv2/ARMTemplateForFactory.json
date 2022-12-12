@@ -4,16 +4,28 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "数据工厂名称",
 			"defaultValue": "lorealv2"
+		},
+		"AzureDataLakeStorageTest_accountKey": {
+			"type": "secureString",
+			"metadata": "“AzureDataLakeStorageTest”的“accountKey”的安全字符串"
+		},
+		"AzureDatabricksDeltaLakeTest_accessToken": {
+			"type": "secureString",
+			"metadata": "“AzureDatabricksDeltaLakeTest”的“accessToken”的安全字符串"
 		},
 		"allpurposedcluster_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'allpurposedcluster'"
+			"metadata": "“allpurposedcluster”的“accessToken”的安全字符串"
 		},
 		"lorealv4_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'lorealv4'"
+			"metadata": "“lorealv4”的“accessToken”的安全字符串"
+		},
+		"AzureDataLakeStorageTest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hyperstest.dfs.core.windows.net"
 		},
 		"allpurposedcluster_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -1386,6 +1398,783 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Loreal_test_on_job_cluster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "loreal_test1-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test1-2",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [
+							{
+								"activity": "loreal_test1-1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test1-3",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [
+							{
+								"activity": "loreal_test1-2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test2-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test2.yaml",
+								"20221121",
+								"{\"{dt}\": \"20221121\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test2-2",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [
+							{
+								"activity": "loreal_test2-1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test2.yaml",
+								"20221121",
+								"{\"{dt}\": \"20221121\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test3-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test3.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test4-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test4.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test5-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test5.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "loreal_test6-1",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "com.hypers.etl.core.Application",
+							"parameters": [
+								"/dbfs/FileStore/test/globalConfig.yaml",
+								"/dbfs/FileStore/test/hive_test6.yaml",
+								"20221119",
+								"{\"{dt}\": \"20221119\"}"
+							],
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+								},
+								{
+									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "lorealv4",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-11-03T04:01:43Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/lorealv4')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TestCall')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1688,13 +2477,154 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/callTheFile2DataLake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowAdlsGen2DataLake",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceOrder": {},
+									"WriteAsparquet": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowAdlsGen2DataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/callTheFile2DeltaTable')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowAdlsGen2Delta",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceOrder": {},
+									"deltaLakeSink": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowAdlsGen2Delta')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/callTheFileDataFlow')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflowAdlsGen2Demo",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceOrder": {},
+									"sink2ouput": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflowAdlsGen2Demo')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/hive_databricks')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "hive-3",
+						"name": "hive-4",
 						"type": "DatabricksSparkJar",
 						"dependsOn": [],
 						"policy": {
@@ -2509,6 +3439,179 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/InputOrder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageTest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "order.csv",
+						"folderPath": "demo/input",
+						"fileSystem": "test"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "userName",
+						"type": "String"
+					},
+					{
+						"name": "goodsName",
+						"type": "String"
+					},
+					{
+						"name": "num",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageTest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OuputText')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageTest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "demo/output",
+						"fileSystem": "test"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageTest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageTest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "demo/table",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageTest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ReadOrderTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageTest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": " ",
+						"folderPath": "demo/table/",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "userName",
+						"type": "UTF8"
+					},
+					{
+						"name": "goodsName",
+						"type": "UTF8"
+					},
+					{
+						"name": "num",
+						"type": "INT32"
+					},
+					{
+						"name": "brand",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageTest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorageTest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorageTest_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorageTest_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLakeTest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Test",
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "https://adb-3936566003135075.15.azuredatabricks.net",
+					"clusterId": "1115-100811-3wsmdq3m",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksDeltaLakeTest_accessToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/allpurposedcluster')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -2595,7 +3698,7 @@
 						"value": "[parameters('lorealv4_accessToken')]"
 					},
 					"instancePoolId": "1031-070915-lupin4-pool-lpv41fhn",
-					"newClusterNumOfWorker": "1:2",
+					"newClusterNumOfWorker": "1:4",
 					"newClusterSparkConf": {
 						"spark.sql.hive.metastore.version": "3.1.0",
 						"javax.jdo.option.ConnectionPassword": "Ab123456",
@@ -2612,6 +3715,7 @@
 						"spark.kryoserializer.buffer.max": "1024m"
 					},
 					"newClusterSparkEnvVars": {
+						"spark.executor.instances": "4",
 						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
 					},
 					"newClusterVersion": "11.3.x-scala2.12",
@@ -2624,444 +3728,274 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Loreal_test_on_job_cluster')]",
+			"name": "[concat(parameters('factoryName'), '/dataflowAdlsGen2DataLake')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "InputOrder",
+								"type": "DatasetReference"
+							},
+							"name": "sourceOrder"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "WriteAsparquet"
+						}
+					],
+					"transformations": [
+						{
+							"name": "addNewColumn"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          userName as string,",
+						"          goodsName as string,",
+						"          num as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceOrder",
+						"sourceOrder derive(brand = goodsName,",
+						"     partitionBy('key',",
+						"          0,",
+						"          brand",
+						"     )) ~> addNewColumn",
+						"addNewColumn sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('key',",
+						"          0,",
+						"          brand",
+						"     )) ~> WriteAsparquet"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/InputOrder')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowAdlsGen2Delta')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"linkedService": {
+								"referenceName": "AzureDataLakeStorageTest",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sourceOrder"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureDataLakeStorageTest",
+								"type": "LinkedServiceReference"
+							},
+							"name": "deltaLakeSink"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          userName as string,",
+						"          goodsName as string,",
+						"          num as integer,",
+						"          brand as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: true,",
+						"     inferDriftedColumnTypes: true,",
+						"     limit: 100,",
+						"     ignoreNoFilesFound: false,",
+						"     partitionRootPath: 'demo/table',",
+						"     format: 'parquet',",
+						"     fileSystem: 'test',",
+						"     compressionCodec: 'snappy',",
+						"     wildcardPaths:['demo/table/*/*.parquet']) ~> sourceOrder",
+						"sourceOrder sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'delta',",
+						"     compressionType: 'snappy',",
+						"     compressionLevel: 'Fastest',",
+						"     fileSystem: 'test',",
+						"     folderPath: 'demo/table2',",
+						"     overwrite:true,",
+						"     mergeSchema: false,",
+						"     autoCompact: false,",
+						"     optimizedWrite: false,",
+						"     vacuum: 0,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('key',",
+						"          0,",
+						"          brand",
+						"     )) ~> deltaLakeSink"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageTest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflowAdlsGen2Demo')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "InputOrder",
+								"type": "DatasetReference"
+							},
+							"name": "sourceOrder"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OuputText",
+								"type": "DatasetReference"
+							},
+							"name": "sink2ouput"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filterNum"
+						},
+						{
+							"name": "aggregateUserAndGood"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          userName as string,",
+						"          goodsName as string,",
+						"          num as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceOrder",
+						"sourceOrder filter(num>=1) ~> filterNum",
+						"filterNum aggregate(groupBy(userName,",
+						"          goodsName),",
+						"     num = sum(num)) ~> aggregateUserAndGood",
+						"aggregateUserAndGood sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2ouput"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/InputOrder')]",
+				"[concat(variables('factoryId'), '/datasets/OuputText')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/para_test0')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "loreal_test1-1",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test1-2",
-						"type": "DatabricksSparkJar",
+						"name": "Execute_para_test1",
+						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "loreal_test1-1",
+								"activity": "date1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+							"pipeline": {
+								"referenceName": "para_test1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": false,
+							"parameters": {
+								"date": {
+									"value": "@variables('date1')",
+									"type": "Expression"
 								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test1-3",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [
-							{
-								"activity": "loreal_test1-2",
-								"dependencyConditions": [
-									"Succeeded"
-								]
 							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
 						}
 					},
 					{
-						"name": "loreal_test2-1",
-						"type": "DatabricksSparkJar",
+						"name": "date1",
+						"type": "SetVariable",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test2.yaml",
-								"20221121",
-								"{\"{dt}\": \"20221121\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test2-2",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [
-							{
-								"activity": "loreal_test2-1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
+							"variableName": "date1",
+							"value": {
+								"value": "@formatDateTime(convertTimeZone(getPastTime(0, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')",
+								"type": "Expression"
 							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test2.yaml",
-								"20221121",
-								"{\"{dt}\": \"20221121\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
 						}
-					},
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"date1": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/para_test1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/para_test1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
 					{
-						"name": "loreal_test3-1",
+						"name": "Jar1",
 						"type": "DatabricksSparkJar",
 						"dependsOn": [],
 						"policy": {
@@ -3075,256 +4009,10 @@
 						"typeProperties": {
 							"mainClassName": "com.hypers.etl.core.Application",
 							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test3.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test4-1",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test4.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test5-1",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test5.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
-							],
-							"libraries": [
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
-								},
-								{
-									"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
-								}
-							]
-						},
-						"linkedServiceName": {
-							"referenceName": "lorealv4",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "loreal_test6-1",
-						"type": "DatabricksSparkJar",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"mainClassName": "com.hypers.etl.core.Application",
-							"parameters": [
-								"/dbfs/FileStore/test/globalConfig.yaml",
-								"/dbfs/FileStore/test/hive_test6.yaml",
-								"20221119",
-								"{\"{dt}\": \"20221119\"}"
+								"/dbfs/FileStore/test/param_test/globalConfig.yaml",
+								"/dbfs/FileStore/test/param_test/pgsql_test.yaml",
+								"20221109",
+								"{\"{date}\":\"@{pipeline().parameters.date}\"}"
 							],
 							"libraries": [
 								{
@@ -3393,8 +4081,12 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": [],
-				"lastPublishTime": "2022-11-03T04:01:43Z"
+				"parameters": {
+					"date": {
+						"type": "string"
+					}
+				},
+				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/lorealv4')]"

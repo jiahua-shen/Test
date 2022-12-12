@@ -5,11 +5,20 @@
 		"factoryName": {
 			"value": "lorealv2"
 		},
+		"AzureDataLakeStorageTest_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricksDeltaLakeTest_accessToken": {
+			"value": ""
+		},
 		"allpurposedcluster_accessToken": {
 			"value": ""
 		},
 		"lorealv4_accessToken": {
 			"value": ""
+		},
+		"AzureDataLakeStorageTest_properties_typeProperties_url": {
+			"value": "https://hyperstest.dfs.core.windows.net"
 		},
 		"allpurposedcluster_properties_typeProperties_existingClusterId": {
 			"value": "1115-100811-3wsmdq3m"

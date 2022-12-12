@@ -4,16 +4,28 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "数据工厂名称",
 			"defaultValue": "lorealv2"
+		},
+		"AzureDataLakeStorageTest_accountKey": {
+			"type": "secureString",
+			"metadata": "“AzureDataLakeStorageTest”的“accountKey”的安全字符串"
+		},
+		"AzureDatabricksDeltaLakeTest_accessToken": {
+			"type": "secureString",
+			"metadata": "“AzureDatabricksDeltaLakeTest”的“accessToken”的安全字符串"
 		},
 		"allpurposedcluster_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'allpurposedcluster'"
+			"metadata": "“allpurposedcluster”的“accessToken”的安全字符串"
 		},
 		"lorealv4_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'lorealv4'"
+			"metadata": "“lorealv4”的“accessToken”的安全字符串"
+		},
+		"AzureDataLakeStorageTest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hyperstest.dfs.core.windows.net"
 		},
 		"allpurposedcluster_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -21,11 +33,11 @@
 		},
 		"containerUri": {
 			"type": "string",
-			"metadata": "URI to storage account containing linked ARM templates"
+			"metadata": "包含链接 ARM 模板的存储帐户的 URI"
 		},
 		"containerSasToken": {
 			"type": "string",
-			"metadata": "Sas token to storage account containing linked ARM templates"
+			"metadata": "包含链接 ARM 模板的存储帐户的 SAS 令牌"
 		}
 	},
 	"variables": {
@@ -46,11 +58,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorageTest_accountKey": {
+						"value": "[parameters('AzureDataLakeStorageTest_accountKey')]"
+					},
+					"AzureDatabricksDeltaLakeTest_accessToken": {
+						"value": "[parameters('AzureDatabricksDeltaLakeTest_accessToken')]"
+					},
 					"allpurposedcluster_accessToken": {
 						"value": "[parameters('allpurposedcluster_accessToken')]"
 					},
 					"lorealv4_accessToken": {
 						"value": "[parameters('lorealv4_accessToken')]"
+					},
+					"AzureDataLakeStorageTest_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorageTest_properties_typeProperties_url')]"
 					},
 					"allpurposedcluster_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('allpurposedcluster_properties_typeProperties_existingClusterId')]"
@@ -58,6 +79,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "lorealv2_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'lorealv2_ArmTemplate_0')]"
+			]
 		}
 	]
 }
