@@ -7,8 +7,7 @@
 		},
 		"parameters": {
 			"brand": {
-				"type": "string",
-				"defaultValue": "goodsA"
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -24,6 +23,19 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "userName",
+				"type": "UTF8"
+			},
+			{
+				"name": "goodsName",
+				"type": "UTF8"
+			},
+			{
+				"name": "num",
+				"type": "INT32"
+			}
+		]
 	}
 }
