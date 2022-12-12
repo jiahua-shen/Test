@@ -5,34 +5,25 @@
 			"referenceName": "AzureDataLakeStorageTest",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"brand": {
+				"type": "string",
+				"defaultValue": "goodsA"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": " ",
-				"folderPath": "demo/table/",
+				"folderPath": {
+					"value": "@concat('demo/table/brand=',dataset().brand)",
+					"type": "Expression"
+				},
 				"fileSystem": "test"
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": [
-			{
-				"name": "userName",
-				"type": "UTF8"
-			},
-			{
-				"name": "goodsName",
-				"type": "UTF8"
-			},
-			{
-				"name": "num",
-				"type": "INT32"
-			},
-			{
-				"name": "brand",
-				"type": "UTF8"
-			}
-		]
+		"schema": []
 	}
 }
