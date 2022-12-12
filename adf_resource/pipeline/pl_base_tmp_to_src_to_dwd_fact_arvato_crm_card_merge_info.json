@@ -17,8 +17,9 @@
 				"typeProperties": {
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
-						null,
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/','pipeline().parameters.PT_BRAND_CODE','/conf/tmp/fact_arvato_crm_card_merge_info.yaml')",
+						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/fact_arvato_crm_card_merge_info.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{ETL_DATE}\":\"@{pipeline().parameters.ETL_DATE}\",\"{CURRENT_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
 					"libraries": [
