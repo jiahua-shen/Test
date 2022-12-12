@@ -1,0 +1,67 @@
+{
+	"name": "dataflowAdlsGen2Delta_Test",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ReadOrderTable",
+						"type": "DatasetReference"
+					},
+					"name": "sourceOrder"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorageTest",
+						"type": "LinkedServiceReference"
+					},
+					"name": "deltaLakeSink"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          userName as string,",
+				"          goodsName as string,",
+				"          num as integer,",
+				"          brand as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     inferDriftedColumnTypes: true,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false,",
+				"     partitionRootPath: 'demo/table',",
+				"     format: 'parquet') ~> sourceOrder",
+				"sourceOrder sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     compressionType: 'snappy',",
+				"     compressionLevel: 'Fastest',",
+				"     fileSystem: 'test',",
+				"     folderPath: 'demo/table2',",
+				"     overwrite:true,",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('key',",
+				"          0,",
+				"          brand",
+				"     )) ~> deltaLakeSink"
+			]
+		}
+	}
+}

@@ -5,7 +5,14 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set brand",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -16,8 +23,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflowAdlsGen2Delta",
-						"type": "DataFlowReference"
+						"referenceName": "dataflowAdlsGen2Delta_Test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sourceOrder": {
+								"brand": {
+									"value": "@variables('brand')",
+									"type": "Expression"
+								}
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -25,8 +40,23 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Set brand",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brand",
+					"value": "goodsA"
+				}
 			}
 		],
+		"variables": {
+			"brand": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
