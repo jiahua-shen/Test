@@ -22,7 +22,7 @@
 					"waitOnCompletion": false,
 					"parameters": {
 						"date": {
-							"value": "@variables('date')",
+							"value": "@variables('date1')",
 							"type": "Expression"
 						}
 					}
@@ -34,7 +34,7 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "date",
+					"variableName": "date1",
 					"value": {
 						"value": "@formatDateTime(convertTimeZone(getPastTime(0, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')",
 						"type": "Expression"
@@ -43,7 +43,7 @@
 			}
 		],
 		"variables": {
-			"date": {
+			"date1": {
 				"type": "String"
 			}
 		},

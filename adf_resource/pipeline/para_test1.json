@@ -20,7 +20,7 @@
 						"/dbfs/FileStore/test/param_test/globalConfig.yaml",
 						"/dbfs/FileStore/test/param_test/pgsql_test.yaml",
 						"20221109",
-						"@pipeline().parameters.date"
+						"{\"{date}\":\"@{pipeline().parameters.date}\"}"
 					],
 					"libraries": [
 						{
