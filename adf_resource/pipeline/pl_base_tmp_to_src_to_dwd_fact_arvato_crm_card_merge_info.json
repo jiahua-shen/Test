@@ -106,10 +106,10 @@
 				"typeProperties": {
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
-						"/dbfs/FileStore/test/param_test/globalConfig.yaml",
-						"/dbfs/FileStore/test/param_test/pgsql_test.yaml",
-						"20221109",
-						"{\"{date}\":\"@{pipeline().parameters.date}\"}"
+						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/fact_arvato_crm_card_merge_info.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
 					"libraries": [
 						{
