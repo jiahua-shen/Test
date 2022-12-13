@@ -19,7 +19,7 @@
 					"parameters": [
 						"/dbfs/FileStore/test/param_test/globalConfig.yaml",
 						"/dbfs/FileStore/test/param_test/pgsql_test.yaml",
-						"20221109",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.date,'/conf/tmp/fact_arvato_crm_card_merge_info.yaml')",
 						"{\"{date}\":\"@{pipeline().parameters.date}\"}"
 					],
 					"libraries": [
