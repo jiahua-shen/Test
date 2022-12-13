@@ -1,0 +1,7 @@
+{
+	"name": "AzureDataLakeStorage726",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/51499e36-0b01-49b0-83c9-9323bd0318b9/resourceGroups/sgp/providers/Microsoft.Storage/storageAccounts/hyperstest",
+		"groupId": "dfs"
+	}
+}
