@@ -1,0 +1,282 @@
+{
+	"name": "pl_base_tmp_to_src_to_dwd_dim_arvato_crm_consumer_extension",
+	"properties": {
+		"activities": [
+			{
+				"name": "spjar_tmp_dim_arvato_crm_consumer_extension",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/dim_arvato_crm_consumer_extension.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"{ETL_DATE}\":\"@{pipeline().parameters.ETL_DATE}\",\"{CURRENT_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": [
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "lorealv4",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_dim_arvato_crm_consumer_extension",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_tmp_dim_arvato_crm_consumer_extension",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/dim_arvato_crm_consumer_extension.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": [
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "lorealv4",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_dwd_dim_arvato_crm_consumer_extension",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_src_dim_arvato_crm_consumer_extension",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/dwd/dim_arvato_crm_consumer_extension.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": [
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/better_files_2_12_3_8_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/commons_email_1_5.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/config_1_3_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_bridge_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_core_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_domain_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_sink_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_source_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_udf_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/dbs_utils_1_0_SNAPSHOT.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/javax_mail_1_5_6.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/jsch_0_1_54.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/mysql_connector_java_8_0_17.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/play_mailer_2_11_7_0_0.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/postgresql_9_4_1212.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/sftp_client_1_0_3.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/snakeyaml_1_25.jar"
+						},
+						{
+							"jar": "dbfs:/FileStore/jars/jar_test/spark_sftp_2_11_1_1_5.jar"
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "lorealv4",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"PT_BRAND_CODE": {
+				"type": "string"
+			},
+			"ETL_DATE": {
+				"type": "string"
+			},
+			"CURRENT_DATE": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "MDB/BASE"
+		},
+		"annotations": []
+	}
+}
