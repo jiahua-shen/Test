@@ -1,9 +1,9 @@
 {
-	"name": "pl_base_tmp_to_src_to_dwd_fact_arvato_crm_card_merge_info",
+	"name": "pl_base_tmp_to_src_to_dwd_dim_arvato_md_store",
 	"properties": {
 		"activities": [
 			{
-				"name": "spjar_tmp_fact_arvato_crm_card_merge_info",
+				"name": "spjar_tmp_dim_arvato_md_store",
 				"type": "DatabricksSparkJar",
 				"dependsOn": [],
 				"policy": {
@@ -18,7 +18,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/fact_arvato_crm_card_merge_info.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/dim_arvato_md_store.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{ETL_DATE}\":\"@{pipeline().parameters.ETL_DATE}\",\"{CURRENT_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
@@ -85,11 +85,11 @@
 				}
 			},
 			{
-				"name": "spjar_src_fact_arvato_crm_card_merge_info",
+				"name": "spjar_src_dim_arvato_md_store",
 				"type": "DatabricksSparkJar",
 				"dependsOn": [
 					{
-						"activity": "spjar_tmp_fact_arvato_crm_card_merge_info",
+						"activity": "spjar_tmp_dim_arvato_md_store",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -107,7 +107,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/fact_arvato_crm_card_merge_info.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/dim_arvato_md_store.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
@@ -174,11 +174,11 @@
 				}
 			},
 			{
-				"name": "spjar_dwd_fact_arvato_crm_card_merge_info",
+				"name": "spjar_dwd_dim_arvato_md_store",
 				"type": "DatabricksSparkJar",
 				"dependsOn": [
 					{
-						"activity": "spjar_src_fact_arvato_crm_card_merge_info",
+						"activity": "spjar_src_dim_arvato_md_store",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -196,7 +196,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/dwd/fact_arvato_crm_card_merge_info.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/dwd/dim_arvato_md_store.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
