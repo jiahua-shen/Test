@@ -18,7 +18,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/core/MDB/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/dim_arvato_crm_consumer_extension.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/core/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/tmp/dim_arvato_crm_consumer_extension.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{ETL_DATE}\":\"@{pipeline().parameters.ETL_DATE}\",\"{CURRENT_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
@@ -107,7 +107,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/core/MDB/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/dim_arvato_crm_consumer_extension.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/core/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/src/dim_arvato_crm_consumer_extension.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
@@ -196,7 +196,7 @@
 					"mainClassName": "com.hypers.etl.core.Application",
 					"parameters": [
 						"/dbfs/FileStroe/LorealETL/core/MDB/globalConfig.yaml",
-						"@concat('/dbfs/FileStroe/LorealETL/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/dwd/dim_arvato_crm_consumer_extension.yaml')",
+						"@concat('/dbfs/FileStroe/LorealETL/core/MDB/',pipeline().parameters.PT_BRAND_CODE,'/conf/dwd/dim_arvato_crm_consumer_extension.yaml')",
 						"@pipeline().parameters.CURRENT_DATE",
 						"{\"{PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
 					],
