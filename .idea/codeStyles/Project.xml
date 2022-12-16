@@ -1,22 +1,13 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <H2CodeStyleSettings version="6">
-      <option name="USE_GENERAL_STYLE" value="false" />
-      <option name="KEYWORD_CASE" value="2" />
-    </H2CodeStyleSettings>
-    <H2CodeStyleSettings version="6">
-      <option name="USE_GENERAL_STYLE" value="false" />
-      <option name="KEYWORD_CASE" value="2" />
-    </H2CodeStyleSettings>
     <ScalaCodeStyleSettings>
-      <option name="alwaysUsedImports">
-        <array>
-          <option value="sqlContext.implicits._" />
-        </array>
-      </option>
+      <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
     </ScalaCodeStyleSettings>
-    <SqlCodeStyleSettings version="6">
+    <SqlCodeStyleSettings version="5">
       <option name="KEYWORD_CASE" value="2" />
+      <option name="SUBQUERY_OPENING" value="4" />
+      <option name="SUBQUERY_CONTENT" value="1" />
+      <option name="SUBQUERY_CLOSING" value="4" />
     </SqlCodeStyleSettings>
   </code_scheme>
 </component>
