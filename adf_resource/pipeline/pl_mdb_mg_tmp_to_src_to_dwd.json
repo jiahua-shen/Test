@@ -1,0 +1,113 @@
+{
+	"name": "pl_mdb_mg_tmp_to_src_to_dwd",
+	"properties": {
+		"activities": [
+			{
+				"name": "PT_BRAND_CODE",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "PT_BRAND_CODE",
+					"value": "mg"
+				}
+			},
+			{
+				"name": "ETL_DATE",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ETL_DATE",
+					"value": {
+						"value": "@formatDateTime(convertTimeZone(getPastTime(1, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "CURRENT_DATE",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CURRENT_DATE",
+					"value": {
+						"value": "@formatDateTime(convertTimeZone(getPastTime(0, 'Day'), 'UTC', 'China Standard Time'),'yyyyMMdd')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PT_BRAND_CODE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ETL_DATE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CURRENT_DATE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_base_tmp_to_src_to_dwd_dim_arvato_crm_consumer_social_num",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"PT_BRAND_CODE": {
+							"value": "@variables('PT_BRAND_CODE')",
+							"type": "Expression"
+						},
+						"ETL_DATE": {
+							"value": "@variables('ETL_DATE')",
+							"type": "Expression"
+						},
+						"CURRENT_DATE": {
+							"value": "@variables('CURRENT_DATE')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Execute Pipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"PT_BRAND_CODE": {
+				"type": "String"
+			},
+			"ETL_DATE": {
+				"type": "String"
+			},
+			"CURRENT_DATE": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "MDB/mg"
+		},
+		"annotations": []
+	}
+}
