@@ -1,0 +1,58 @@
+{
+	"name": "TestLookUpFile",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteWebAPI",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat('https://',pipeline().parameters.DatabricksWorkspaceID,'.azuredatabricks.net/api/2.1/jobs/run-now')",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "@concat('{\"job_id\":',pipeline().parameters.JobID,',\"jar_params\":[\"/dbfs/FileStore/test/globalConfig.yaml\",\"/dbfs/FileStore/test/hive_test.yaml\",\"20221119\",\"{\\\"{dt}\\\":\\\"20221119\\\"}\"]','}')",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"JobID": {
+				"type": "string",
+				"defaultValue": "855809324049451"
+			},
+			"DatabricksWorkspaceID": {
+				"type": "string",
+				"defaultValue": "adb-3936566003135075.15"
+			},
+			"WaitSeconds": {
+				"type": "int",
+				"defaultValue": 30
+			}
+		},
+		"variables": {
+			"JobStatus": {
+				"type": "String",
+				"defaultValue": "Running"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-11-29T09:39:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
