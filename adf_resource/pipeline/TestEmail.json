@@ -1,0 +1,34 @@
+{
+	"name": "TestEmail",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteWebAPI",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "https://cgp-email-send.azurewebsites.net:443/api/SendEmailFromPipeline/triggers/manual/invoke?api-version=2022-05-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5H3TFo_WJCnRLnHsoLqG7kP9k4e_lcgGbFh9utqu0UY",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "   {\n    \"message\" : \"This is a custom dynamic message from your pipeline with run ID @{pipeline().RunId}.\",\n    \"dataFactoryName\" : \"@{pipeline().DataFactory}\", \n    \"pipelineName\" : \"@{pipeline().Pipeline}\", \n    \"receiver\" : \"woshishenjiahua@126.com\"\n   }",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-11-29T08:57:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
