@@ -21,7 +21,7 @@
 					},
 					"method": "POST",
 					"body": {
-						"value": "   {\n    \"message\" : \"This is a custom dynamic message from your pipeline with run ID @{pipeline().RunId}.\",\n    \"dataFactoryName\" : \"@{pipeline().DataFactory}\", \n    \"pipelineName\" : \"@{pipeline().Pipeline}\", \n    \"receiver\" : \"woshishenjiahua@126.com\"\n   }",
+						"value": "   {\n    \"message\" : \"This is a custom dynamic message from your pipeline with run ID @{pipeline().RunId}.\",\n    \"dataFactoryName\" : \"@{pipeline().DataFactory}\", \n    \"pipelineName\" : \"@{pipeline().Pipeline}\", \n    \"receiver\" : \"jiahua.shen@mail.hypers.com\"\n   }",
 						"type": "Expression"
 					}
 				}
