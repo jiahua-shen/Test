@@ -21,12 +21,17 @@
 					},
 					"method": "POST",
 					"body": {
-						"value": "   {\n    \"message\" : \"This is a custom dynamic message from your pipeline with run ID @{pipeline().RunId}.\",\n    \"dataFactoryName\" : \"@{pipeline().DataFactory}\", \n    \"pipelineName\" : \"@{pipeline().Pipeline}\", \n    \"receiver\" : \"jiahua.shen@mail.hypers.com\"\n   }",
+						"value": "   {\n    \"message\" : \"This is a custom dynamic message from your pipeline with run ID @{pipeline().RunId}.\",\n    \"errorMessage\" : \"@{pipeline().parameters.ERROR_MESSAGE}\", \n    \"pipelineName\" : \"@{pipeline().Pipeline}\", \n    \"receiver\" : \"jiahua.shen@mail.hypers.com\"\n   }",
 						"type": "Expression"
 					}
 				}
 			}
 		],
+		"parameters": {
+			"ERROR_MESSAGE": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2022-11-29T08:57:06Z"
 	},
