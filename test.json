@@ -1,0 +1,418 @@
+{
+	"name": "jd_order_pre",
+	"properties": {
+		"activities": [
+			{
+				"name": "spjar_src_fact_szkj_jd_order_detail_raw",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_szkj_jd_order_detail_raw.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_szkj_jd_order_detail_rawpre",
+				"description": "tmp层order_detail_raw与skumapping表join上的写入\nsrc层order_detail_rawpre",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_szkj_jd_order_detail_rawpre.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_tmp_fact_szkj_jd_order_detail_raw_hold",
+				"description": "tmp层order_detail_raw与skumapping表join不上写入\ntmp.order_detail_raw_hold",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/tmp/tmp_fact_szkj_jd_order_detail_raw_hold.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_szkj_jd_order_detail_raw_hold",
+				"description": "tmp层order_detail_raw_hold平移到src层",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_tmp_fact_szkj_jd_order_detail_raw_hold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_szkj_jd_order_detail_raw_hold.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_szkj_jd_order_detail_raw_holdpre",
+				"description": "dwd层 rawhold history 与 mapping表 join到的写入 src层order_detail_raw_holdpre",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_szkj_jd_order_detail_raw_holdpre.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_dwd_fact_szkj_jd_order_detail_raw_hold_history",
+				"description": "1.历史dwd层raw_hold_history\n剔除当天src可下行raw_holdpre \n合并当天src最新 raw_hold\n2.写入src层raw_hold_history\n3.生成新dwd 层 raw_hold_history",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_src_fact_szkj_jd_order_detail_raw_hold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "spjar_src_fact_szkj_jd_order_detail_raw_holdpre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/dwd/dwd_fact_szkj_jd_order_detail_raw_hold_history.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_szkj_jd_order_detail_raw_freepre",
+				"description": "src层order_detail_rawpre\nsrc层order_detail_raw_holdpre\n合并成src层order_detail_raw_freepreunion\n在从union取最新生成src层order_detail_raw_freepre",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_src_fact_szkj_jd_order_detail_rawpre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "spjar_src_fact_szkj_jd_order_detail_raw_holdpre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_szkj_jd_order_detail_raw_freepre.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_cdp_jd_order_detail_raw_free",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_src_fact_szkj_jd_order_detail_raw_freepre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_cdp_jd_order_detail_raw_free.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_dwd_fact_cdp_jd_order_detail_freepre",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_src_fact_cdp_jd_order_detail_raw_free",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/dwd/dwd_fact_cdp_jd_order_detail_freepre.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_dwd_fact_cdp_jd_order_detail_free",
+				"description": "过滤掉曾经下行过的数据",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_dwd_fact_cdp_jd_order_detail_freepre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/dwd/dwd_fact_cdp_jd_order_detail_free.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_src_fact_cdp_jd_order_detail_free_appeared",
+				"description": "与history表相交,记录出因为曾经下行而不下行的数据",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_dwd_fact_cdp_jd_order_detail_freepre",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/src/src_fact_cdp_jd_order_detail_free_appeared.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "spjar_dwd_fact_cdp_jd_order_detail_free_history",
+				"description": "合并更新成最新的已下行结果表",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [
+					{
+						"activity": "spjar_dwd_fact_cdp_jd_order_detail_free",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 120,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mainClassName": "com.hypers.etl.core.Application",
+					"parameters": [
+						"/dbfs/FileStore/LorealETL/core/MDB/globalConfig.yaml",
+						"@concat('/dbfs/FileStore/LorealETL/core/JD/conf/dwd/dwd_fact_cdp_jd_order_detail_free_history.yaml')",
+						"@pipeline().parameters.CURRENT_DATE",
+						"{\"${PT_ETL_DATE}\":\"@{pipeline().parameters.CURRENT_DATE}\"}"
+					],
+					"libraries": []
+				},
+				"linkedServiceName": {
+					"referenceName": "adb_jd_active",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"CURRENT_DATE": {
+				"type": "string",
+				"defaultValue": "20230330"
+			}
+		},
+		"folder": {
+			"name": "JD"
+		},
+		"annotations": []
+	}
+}
